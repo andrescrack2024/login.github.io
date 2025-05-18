@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --glass: rgba(255, 255, 255, 0.15);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background: url('https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=2232&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1000px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.7), rgba(219, 39, 119, 0.5));
+            z-index: 0;
+        }
+        
+        .login-container {
+            background: var(--glass);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+            margin: 20px;
+            overflow: hidden;
+        }
+        
+        .login-container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0) 60%
+            );
+            transform: rotate(30deg);
+            z-index: -1;
+        }
+        
+        .login-icon {
+            text-align: center;
+            margin-bottom: 40px;
+            transform: translateZ(20px);
+        }
+        
+        .login-icon i {
+            font-size: 50px;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            width: 90px;
+            height: 90px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.5);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .input-container {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%) translateZ(10px);
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 12px;
+            color: white;
+            font-weight: 500;
+            font-size: 15px;
+            transform: translateZ(15px);
+            padding-left: 5px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 18px 20px 18px 70px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateZ(0);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+            transform: translateZ(5px);
+        }
+        
+        input[type="email"]:focus + .input-icon,
+        input[type="password"]:focus + .input-icon {
+            color: var(--accent);
+            transform: translateY(-50%) translateZ(15px) scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+            transform: translateZ(10px);
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .remember-me label {
+            margin-bottom: 0;
+            cursor: pointer;
+            color: white;
+            font-weight: 400;
+        }
+        
+        .forgot-password a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .forgot-password a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        
+        .forgot-password a:hover {
+            color: var(--accent);
+        }
+        
+        .forgot-password a:hover::after {
+            width: 100%;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.5);
+            transform: translateZ(0);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .login-button:hover {
+            transform: translateY(-3px) translateZ(5px);
+            box-shadow: 0 15px 40px rgba(67, 97, 238, 0.7);
+        }
+        
+        .login-button:hover::before {
+            left: 100%;
+        }
+        
+        .login-button:active {
+            transform: translateY(0) translateZ(0);
+        }
+        
+        .login-button i {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+        
+        .login-button:hover i {
+            transform: translateX(5px);
+        }
+        
+        .floating-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float-particle linear infinite;
+            filter: blur(1px);
+        }
+        
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px;
+                margin: 15px;
+            }
+            
+            .login-icon i {
+                width: 70px;
+                height: 70px;
+                font-size: 40px;
+            }
+            
+            input[type="email"],
+            input[type="password"] {
+                padding: 15px 15px 15px 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-particles" id="particles"></div>
+    
+    <div class="login-container">
+        <div class="login-icon">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-container">
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-container">
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+            
+            <button type="submit" class="login-button">
+                <i class="fas fa-sign-in-alt"></i> SIGN IN
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Crear partículas flotantes
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            const size = Math.random() * 5 + 2;
+            const duration = Math.random() * 15 + 10;
+            const delay = Math.random() * 10;
+            const left = Math.random() * 100;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${left}%`;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+            
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Efecto 3D al mover el mouse
+        const loginContainer = document.querySelector('.login-container');
+        
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            loginContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        
+        // Reset cuando el mouse sale
+        document.addEventListener('mouseleave', () => {
+            loginContainer.style.transform = 'rotateY(0) rotateX(0)';
+        });
+        
+        // Animación del formulario
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('remember').checked;
+            
+            if (!email || !password) {
+                loginContainer.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    loginContainer.style.animation = '';
+                }, 500);
+                return;
+            }
+            
+            const button = document.querySelector('.login-button');
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSING';
+            
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> WELCOME BACK!';
+                button.style.background = 'linear-gradient(135deg, var(--success), #4cc9f0)';
+                
+                setTimeout(() => {
+                    alert('Redirecting to dashboard...');
+                }, 1000);
+            }, 1500);
+        });
+        
+        // Agregar estilo para el efecto shake
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0) rotateY(0) rotateX(0); }
+                20%, 60% { transform: translateX(-10px) rotateY(-5deg); }
+                40%, 80% { transform: translateX(10px) rotateY(5deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
